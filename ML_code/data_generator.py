@@ -20,7 +20,7 @@ class IQDataGenerator(keras.utils.Sequence):
         print('Adding all files to cache')
         for ex in tqdm(self.ex_list):
             this_ex = loadmat(ex)['f_sig']
-            data = np.zeros((this_ex.shape[1],2),dtype='float32')
+            data = np.zeros((this_ex.shape[1],2),dtype=self.args.dtype)
             data[:,0] = np.real(this_ex[0,:])
             data[:,1] = np.imag(this_ex[0,:])
             self.__add_to_cache(ex, data)
@@ -30,7 +30,7 @@ class IQDataGenerator(keras.utils.Sequence):
         # calculate total number of batches:
         with open (os.path.join(self.args.partition_path,'partition.pkl'),'rb') as handle:
             train_list = pkl.load(handle)['train']
-        total_slice_cnt = len(train_list)*(40-self.args.slice_size+1)
+        total_slice_cnt = len(train_list)*(self.args.stats['avg_samples']-self.args.slice_size+1)
         batch_cnt = math.ceil(total_slice_cnt/self.args.batch_size)
         return batch_cnt
 
@@ -38,12 +38,6 @@ class IQDataGenerator(keras.utils.Sequence):
 
     def __add_to_cache(self, file, data):
        
-        magnitude = np.sqrt(data[:,0]**2+data[:,1]**2)
-        short_ex = np.zeros((40,2))
-        short_ex[:,0] = data[np.argmax(magnitude)-10:np.argmax(magnitude)+30,0]
-        short_ex[:,1] = data[np.argmax(magnitude)-10:np.argmax(magnitude)+30,1]
-        data = short_ex
-        
         if self.args.normalize:
             data = (data - self.args.stats['mean']) / self.args.stats['std']
         
@@ -54,7 +48,7 @@ class IQDataGenerator(keras.utils.Sequence):
         #Generate one batch of data 
         ex_indices = np.random.randint(len(self.ex_list), size=self.args.batch_size)
         
-        X = np.zeros((self.args.batch_size, self.args.slice_size, 2), dtype='float32')
+        X = np.zeros((self.args.batch_size, self.args.slice_size, 2), dtype=self.args.dtype)
         y = np.zeros((self.args.batch_size, self.args.num_classes), dtype=int)
 
         cnt = 0

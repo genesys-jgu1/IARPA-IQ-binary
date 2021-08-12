@@ -29,20 +29,15 @@ def test_model(args, model):
         
         # loading mat file
         this_ex = loadmat(ex)['f_sig']
-        data = np.zeros((this_ex.shape[1],2),dtype='float32')
+        data = np.zeros((this_ex.shape[1],2),dtype=args.dtype)
         data[:,0] = np.real(this_ex[0,:])
         data[:,1] = np.imag(this_ex[0,:])
-        magnitude = np.sqrt(data[:,0]**2+data[:,1]**2)
-        short_ex = np.zeros((40,2))
-        short_ex[:,0] = data[np.argmax(magnitude)-10:np.argmax(magnitude)+30,0]
-        short_ex[:,1] = data[np.argmax(magnitude)-10:np.argmax(magnitude)+30,1]
-        data = short_ex
         if args.normalize:
             data = (data - args.stats['mean']) / args.stats['std']
         
         # slice with a stride = 1:
         num_slices = data.shape[0]-args.slice_size+1
-        X = np.zeros((num_slices,args.slice_size,2),dtype='float32')
+        X = np.zeros((num_slices,args.slice_size,2),dtype=args.dtype)
         for i in range(num_slices):
             X[i,:,:] = data[i:i+args.slice_size,:]
 
