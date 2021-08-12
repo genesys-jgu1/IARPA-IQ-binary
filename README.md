@@ -9,7 +9,7 @@ This repository is created and shared for the following paper.
 ## Steps to use the code:
 
 1. Download the dataset from the above page.
-2. Convert the dataset from SigMF format to .mat files using sigmf_converter.py
+2. Convert the dataset from SigMF format to .mat files using sigmf_reader.py
 3. Preprocess the .mat files to generate train/validation/test partitions using pre_process_uav.py
 4. Run the ML code using the bash script run_ML_code.sh (You need to edit the paths inside the .sh file.)
 5. Aggregate the saved predictions using preds_aggregator.py
