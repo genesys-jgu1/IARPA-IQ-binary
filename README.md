@@ -32,6 +32,10 @@ The preprocessing step generates 4 pickle files:
 
 ### 4. Run the ML_code using the bash file:
 
+Run the bash file as:
+	./run_ML_code.sh exp1 0
+where **exp1** is variable **$1** in the bash file and represents an optional experiment name, and **0** is variable **$2** in the bash file and represents the GPU ID.
+
 	python -u /home/nasim/UAVFramework/ML_code/top.py \
 	--exp_name $1 \
 	--partition_path /home/nasim/UAV-TVT/PklFiles/cnn1/ \
@@ -66,7 +70,7 @@ The preprocessing step generates 4 pickle files:
 - **slice_size**: Input size of the NN also known as slice size in the paper.
 - **num_classes**: Number of UAVs you want to fingerprint. This argument determines the output size of the NN.
 - **batch_size**: Your desired batch size for training.
-- **id_gpu**: The GPU id you like to use for training/test.
+- **id_gpu**: The GPU ID you like to use for training/test.
 - **normalize**: Set to true if you wish to normalize data for training/test.
 - **train**: Set to true if you want to train a network.
 - **test**: Set to true if you want to test a nework.
