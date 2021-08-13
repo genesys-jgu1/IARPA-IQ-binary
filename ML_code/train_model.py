@@ -40,4 +40,7 @@ def train_model(args, model):
     for w in weight_list:
         os.remove(w)
     
+    # load the last weights and exit
+    model.load_weights(os.path.join(args.save_path,'model.hdf5'), by_name=True)
+
     return model
