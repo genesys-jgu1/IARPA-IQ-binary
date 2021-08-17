@@ -6,12 +6,12 @@ from keras.layers.core import Flatten, Dense, Dropout, Activation, Reshape
 def AlexNet1D(slice_size=64, num_classes=100):
     
     model = models.Sequential()
-    model.add(Conv1D(channels,7, activation='relu', padding='same', input_shape=(slice_size, 2)))
-    model.add(Conv1D(channels,5, activation='relu', padding='same'))
+    model.add(Conv1D(128,7, activation='relu', padding='same', input_shape=(slice_size, 2)))
+    model.add(Conv1D(128,5, activation='relu', padding='same'))
     model.add(MaxPooling1D())
     for i in range(1, 5):
-        model.add(Conv1D(channels,7, activation='relu', padding='same'))
-        model.add(Conv1D(channels,5, activation='relu', padding='same'))
+        model.add(Conv1D(128,7, activation='relu', padding='same'))
+        model.add(Conv1D(128,5, activation='relu', padding='same'))
         model.add(MaxPooling1D())
     model.add(Flatten())
     model.add(Dense(256, activation='relu'))

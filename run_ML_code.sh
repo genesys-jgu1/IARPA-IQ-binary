@@ -2,8 +2,8 @@
 # ----------------------------------------------------------------------------------------------------
 python -u /home/nasim/UAVFramework/ML_code/top.py \
 --exp_name $1 \
---partition_path /home/nasim/UAV-TVT/PklFiles/cnn1/ \
---stats_path /home/nasim/UAV-TVT/PklFiles/cnn1/ \
+--partition_path /home/nasim/UAV-TVT/pkl_files/cnn1/ \
+--stats_path /home/nasim/UAV-TVT/pkl_files/cnn1/ \
 --save_path /home/nasim/UAV-TVT/results/ \
 --model_flag alexnet \
 --contin false \
