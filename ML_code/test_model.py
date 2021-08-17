@@ -18,9 +18,6 @@ def test_model(args, model):
     preds_slice = {}
     preds_ex = {}
 
-
-
-
     # load test set
     with open(os.path.join(args.partition_path,'partition.pkl'),'rb') as handle:
         test_list = pkl.load(handle)['test']
