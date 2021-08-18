@@ -7,6 +7,7 @@ import random
 from multiprocessing import Pool, cpu_count
 import os
 import math
+import collections
 
 class IQDataGenerator(keras.utils.Sequence):
 
@@ -36,15 +37,18 @@ class IQDataGenerator(keras.utils.Sequence):
     def __len__(self):
         # calculate total number of batches:
         total_slice_cnt = len(self.ex_list)*(self.args.stats['avg_samples']-self.args.slice_size+1)
-        batch_cnt = int(math.ceil(total_slice_cnt/self.args.batch_size))
-        return batch_cnt
+        batch_cnt = (math.ceil(total_slice_cnt/self.args.batch_size))/float(self.args.slice_size)
+        print 'total number of batches are: '+str(int(batch_cnt))
+        return int(batch_cnt)
 
-    def __add_to_cache(self, file, data):
-       
+    def __add_to_cache(self, ex, data):
+        
         if self.args.normalize:
             data = (data - self.args.stats['mean']) / self.args.stats['std']
-        self.data_cache[file] = data
-    
+
+        device_id = self.args.device_ids[self.args.labels[ex]]
+        self.data_cache[ex] = (data,device_id)
+   
     def __getitem__(self, index):
         #Generate one batch of data 
 
@@ -55,19 +59,17 @@ class IQDataGenerator(keras.utils.Sequence):
 
         cnt = 0
         for ex_index in ex_indices:
-            this_ex = self.data_cache[self.ex_list[ex_index]]
             
-            if this_ex.shape[0] < self.args.slice_size:
-                print 'found one short ex'
+            this_ex = self.data_cache[self.ex_list[ex_index]][0]
+            this_class_index = self.data_cache[self.ex_list[ex_index]][1]
 
             # slicing:
             slice_index = random.randint(0, this_ex.shape[0] - self.args.slice_size)
             X[cnt,:,:] = this_ex[slice_index:slice_index+self.args.slice_size, :]
             
             # create y vector:
-            class_index = self.args.device_ids[self.args.labels[self.ex_list[ex_index]]]
-            y[cnt,class_index] = 1
-            
+            y[cnt,this_class_index] = 1
+           
             cnt += 1
         
         return X, y

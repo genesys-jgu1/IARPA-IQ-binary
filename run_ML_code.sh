@@ -8,10 +8,10 @@ python -u /home/nasim/UAVFramework/ML_code/top.py \
 --model_flag alexnet \
 --contin false \
 --json_path /home/nasim/UAV-TVT/results/cnn1/model_file.json \
---hdf5_path /home/nasim/UAV-TVT/results/cnn1/weights.01-0.19.hdf5 \
+--hdf5_path '' \
 --slice_size 256 \
 --num_classes 7 \
---batch_size 512 \
+--batch_size 256 \
 --id_gpu $2 \
 --normalize true \
 --train true \
