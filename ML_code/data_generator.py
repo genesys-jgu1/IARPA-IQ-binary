@@ -20,12 +20,15 @@ class IQDataGenerator(keras.utils.Sequence):
         # load all data to cache:
         print('Adding all files to cache')
         for ex in tqdm(self.ex_list):
-            this_ex = loadmat(ex)['f_sig']
-           
+            #this_ex = loadmat(ex)['f_sig']
+            this_ex = np.fromfile(ex, dtype = 'complex')
+            this_ex = this_ex.reshape(1,-1)
             if this_ex.shape[1] >= self.args.slice_size:
                 data = np.zeros((this_ex.shape[1],2),dtype=self.args.dtype)
-                data[:,0] = np.real(this_ex[0,:])
-                data[:,1] = np.imag(this_ex[0,:])
+                #data[:,0] = np.real(this_ex[0,:])
+                #data[:,1] = np.imag(this_ex[0,:])
+                data[:,0] = this_ex.real
+                data[:,1] = this_ex.imag
                 self.__add_to_cache(ex, data)
         
         # update ex_list to contain only examples with length >= slice_size

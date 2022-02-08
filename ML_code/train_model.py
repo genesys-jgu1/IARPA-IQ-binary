@@ -11,7 +11,7 @@ def train_model(args, model):
     
     
     # load training data
-    with open(os.path.join(args.partition_path,'partition.pkl'),'rb') as handle:
+    with open(os.path.join(args.test_label_path,'partition.pkl'),'rb') as handle:
         partition = pkl.load(handle)
     train_list = partition['train']
     val_list = partition['val']

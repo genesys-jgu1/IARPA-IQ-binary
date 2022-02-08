@@ -11,7 +11,6 @@ def create_model(args):
     """ creates a new model, or loads a model structure and inserts weights 
     and returns either and empty model or a pre-trained model"""
 
-
     if args.contin:
         
         # reading model from json file

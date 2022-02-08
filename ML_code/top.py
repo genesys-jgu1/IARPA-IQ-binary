@@ -23,7 +23,7 @@ if __name__ == '__main__':
 
     parser.add_argument('--exp_name', default='exp1', type=str, help='experiment name')
     parser.add_argument('--save_path', default='', type=str, help='The path where you want the results to be saved')
-    parser.add_argument('--partition_path', default='', type=str, help='Specify the base path')
+    parser.add_argument('--test_label_path', default='', type=str, help='Specify the base path')
     parser.add_argument('--stats_path', default='', type=str, help='Specify the stats path')
     parser.add_argument('--model_flag', default='alexnet', type=str, help='Specify which model to use: alexnet or resnet')
 
@@ -51,12 +51,12 @@ if __name__ == '__main__':
     args.save_path = os.path.join(args.save_path , args.exp_name)
     with open(os.path.join(args.stats_path,'stats.pkl'),'rb') as handle:
         args.stats = pkl.load(handle)
-    with open(os.path.join(args.partition_path,'label.pkl'),'rb') as handle:
+    with open(os.path.join(args.test_label_path,'label.pkl'),'rb') as handle:
         args.labels = pkl.load(handle)
-    with open(os.path.join(args.partition_path,'device_ids.pkl'),'rb') as handle:
+    with open(os.path.join(args.test_label_path,'device_ids.pkl'),'rb') as handle:
         args.device_ids = pkl.load(handle)
     
-    with open(os.path.join(args.partition_path,'partition.pkl'),'rb') as handle:
+    with open(os.path.join(args.test_label_path,'partition.pkl'),'rb') as handle:
         partitions = pkl.load(handle)
     print('train/val/test partitions have this many examples:')
     print len(partitions['train']), len(partitions['val']), len(partitions['test'])
@@ -65,7 +65,7 @@ if __name__ == '__main__':
     model = create_model(args)
     model.summary()
 
-    model.compile(loss='categorical_crossentropy', optimizer=Adam(lr=0.0001), metrics=['accuracy'])
+    model.compile(loss='sparse_categorical_crossentropy', optimizer=Adam(lr=0.0001), metrics=['accuracy'])#remove sparse for actual dataset
     
     # train the model if train is true
     if args.train:

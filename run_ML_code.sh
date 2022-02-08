@@ -1,23 +1,23 @@
 #!/bin/bash
 # ----------------------------------------------------------------------------------------------------
-python -u /home/nasim/UAVFramework/ML_code/top.py \
---exp_name $1 \
---partition_path /home/jerry/7_indoor_filtered/ \
---stats_path /home/jerry/7_indoor_filtered/ \
---save_path /home/nasim/UAV-TVT/results/ \
+python -u /home/jerry/UAV-TVT-bin/ML_code/top.py \
+--exp_name IQbin \
+--test_label_path /home/jerry/IQ_pkl_files_bin/ \
+--stats_path /home/jerry/IQ_pkl_files_bin/ \
+--save_path /home/jerry/IQ_pkl_files_bin/results/ \
 --model_flag alexnet \
 --contin false \
---json_path /home/nasim/UAV-TVT/results/cnn1/model_file.json \
+--json_path '' \
 --hdf5_path '' \
---slice_size 256 \
---num_classes 7 \
---batch_size 256 \
---id_gpu $2 \
+--slice_size 128 \
+--num_classes 1 \
+--batch_size 128 \
+--id_gpu 0 \
 --normalize true \
 --train true \
 --test true \
---epochs 100 \
+--epochs 30 \
 --early_stopping true \
---patience 5 \
-> /home/nasim/UAV-TVT/results/$1/log.out \
-2> /home/nasim/UAV-TVT/results/$1/log.err
+--patience 3 \
+> /home/jerry/IQ_pkl_files_bin/results/log.out \
+2> /home/jerry/IQ_pkl_files_bin/results/log.err

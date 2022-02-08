@@ -19,17 +19,21 @@ def test_model(args, model):
     preds_ex = {}
 
     # load test set
-    with open(os.path.join(args.partition_path,'partition.pkl'),'rb') as handle:
+    with open(os.path.join(args.test_label_path,'partition.pkl'),'rb') as handle:
         test_list = pkl.load(handle)['test']
     
     for ex in tqdm(test_list):
         
         # loading mat file
-        this_ex = loadmat(ex)['f_sig']
+        #this_ex = loadmat(ex)['f_sig']
+        this_ex = np.fromfile(ex, dtype = 'complex')
+        this_ex = this_ex.reshape(1,-1)
         if this_ex.shape[1] >= args.slice_size:
             data = np.zeros((this_ex.shape[1],2),dtype=args.dtype)
-            data[:,0] = np.real(this_ex[0,:])
-            data[:,1] = np.imag(this_ex[0,:])
+            #data[:,0] = np.real(this_ex[0,:])
+            #data[:,1] = np.imag(this_ex[0,:])
+            data[:,0] = this_ex.real
+            data[:,1] = this_ex.imag
             if args.normalize:
                 data = (data - args.stats['mean']) / args.stats['std']
             
