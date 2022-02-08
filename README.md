@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # UAV-TVT In progress
 
 This repository is created and shared for the following paper.
@@ -86,3 +87,7 @@ The slice and accuracy results are reported at the end of `log.out` file.
 The paper proposes a novel aggregation method that is implemented in `preds_aggregator.py` in this repository.
 
 The `ML_code` generates one preds.pkl file after each test experiment, that contains all the predictions of that NN for the all the sub-examples in the whole test set. Running `preds_aggregator.py` generates the aggregated results.
+=======
+# IARPA-IQ-binary
+Work in progress. Version of Nasim Soltani's UAV-TVT code which intakes binary files.
+>>>>>>> ab07e6e7a98b10e8c42f90b535e5fec3d2172469
