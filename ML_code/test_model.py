@@ -4,6 +4,7 @@ from scipy.io import loadmat
 import collections
 import numpy as np
 from tqdm import tqdm
+import glob
 
 def test_model(args, model):
 
@@ -19,8 +20,9 @@ def test_model(args, model):
     preds_ex = {}
 
     # load test set
-    with open(os.path.join(args.test_label_path,'partition.pkl'),'rb') as handle:
-        test_list = pkl.load(handle)['test']
+    '''with open(os.path.join(args.test_label_path,'partition.pkl'),'rb') as handle:
+        test_list = pkl.load(handle)['test']'''
+    test_list = glob.glob(args.data_path+'*')
     
     for ex in tqdm(test_list):
         
@@ -44,8 +46,8 @@ def test_model(args, model):
                 X[i,:,:] = data[i:i+args.slice_size,:]
 
             # prepare true index:
-            true_index = args.device_ids[args.labels[ex]]
-
+            #true_index = args.device_ids[args.labels[ex]]
+            true_index = ex.split('/')[-1].split('_')[0]
             preds = model.predict(X, batch_size=args.batch_size)
 
             # calculate slice accuracy:

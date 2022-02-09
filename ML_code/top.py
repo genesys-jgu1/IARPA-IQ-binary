@@ -23,18 +23,18 @@ if __name__ == '__main__':
 
     parser.add_argument('--exp_name', default='exp1', type=str, help='experiment name')
     parser.add_argument('--save_path', default='', type=str, help='The path where you want the results to be saved')
-    parser.add_argument('--test_label_path', default='', type=str, help='Specify the base path')
+    parser.add_argument('--data_path', default='', type=str, help='Specify the data path')
     parser.add_argument('--stats_path', default='', type=str, help='Specify the stats path')
     parser.add_argument('--model_flag', default='alexnet', type=str, help='Specify which model to use: alexnet or resnet')
 
-    parser.add_argument('--slice_size', default=1024, type=int, help='Specify the slice size')
-    parser.add_argument('--batch_size', default=32, type=int, help='Specify the batch size')
-    parser.add_argument('--num_classes', default=100, type=int, help='Specify the number of total classes')
+    parser.add_argument('--slice_size', default=256, type=int, help='Specify the slice size')
+    parser.add_argument('--batch_size', default=256, type=int, help='Specify the batch size')
+    parser.add_argument('--num_classes', default=2, type=int, help='Specify the number of total classes')
     parser.add_argument('--normalize', default='True', type=str2bool, help='Specify if you want to normalize the data during training and test')
     parser.add_argument('--epochs', default=10, type=int, help='')
     parser.add_argument('--id_gpu', default=0, type=int, help='The id of GPU you like to run the code on.')
     parser.add_argument('--early_stopping', default=False, type=str2bool, help='Specify if you want to use early stopping')
-    parser.add_argument('--patience', default=1, type=int, help='patience')
+    parser.add_argument('--patience', default=1, type=int, help='Specify how many epochs to wait for improvement before early stopping')
     parser.add_argument('--train', default=False, type=str2bool, help='Specify doing training or not')
     parser.add_argument('--test', default=False, type=str2bool, help='Specify doing test or not')
     parser.add_argument('--contin', default=False, type=str2bool, help='If you want to load a pre-trained model')
@@ -51,7 +51,7 @@ if __name__ == '__main__':
     args.save_path = os.path.join(args.save_path , args.exp_name)
     with open(os.path.join(args.stats_path,'stats.pkl'),'rb') as handle:
         args.stats = pkl.load(handle)
-    with open(os.path.join(args.test_label_path,'label.pkl'),'rb') as handle:
+    '''with open(os.path.join(args.test_label_path,'label.pkl'),'rb') as handle:
         args.labels = pkl.load(handle)
     with open(os.path.join(args.test_label_path,'device_ids.pkl'),'rb') as handle:
         args.device_ids = pkl.load(handle)
@@ -59,8 +59,7 @@ if __name__ == '__main__':
     with open(os.path.join(args.test_label_path,'partition.pkl'),'rb') as handle:
         partitions = pkl.load(handle)
     print('train/val/test partitions have this many examples:')
-    print len(partitions['train']), len(partitions['val']), len(partitions['test'])
-
+    print len(partitions['train']), len(partitions['val']), len(partitions['test'])'''
     # create the model
     model = create_model(args)
     model.summary()
