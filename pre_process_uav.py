@@ -22,7 +22,7 @@ def helper(file):
     sequence = data['f_sig']
     Idata = sequence.real 
     Qdata = sequence.imag'''
-    data = np.fromfile(file,dtype='complex')
+    data = np.fromfile(file,dtype='float32')
     data = data.reshape(1,-1)
     Idata = data.real
     Qdata = data.imag
