@@ -28,7 +28,7 @@ def test_model(args, model):
         
         # loading mat file
         #this_ex = loadmat(ex)['f_sig']
-        this_ex = np.fromfile(ex, dtype = atgs.dtype)
+        this_ex = np.fromfile(ex, dtype = args.dtype)
         this_ex = this_ex.reshape(1,-1)
         if this_ex.shape[1] >= args.slice_size:
             data = np.zeros((this_ex.shape[1],2),dtype=args.dtype)
